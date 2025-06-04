@@ -1,7 +1,6 @@
 <?php
 
+use App\Http\Controllers\DicomImageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('dicom-images', DicomImageController::class);
