@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDicomImageRequest;
+use App\Models\DicomImage;
 use Illuminate\Http\Request;
 
 class DicomImageController extends Controller
@@ -11,7 +13,8 @@ class DicomImageController extends Controller
      */
     public function index()
     {
-        //
+        $dicomImages = DicomImage::all();
+        return response()->json($dicomImages);
     }
 
     /**
@@ -25,9 +28,12 @@ class DicomImageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreDicomImageRequest $request)
     {
-        //
+
+        $request->validate();
+
+        return response()->json($dicomImage, 201);
     }
 
     /**
