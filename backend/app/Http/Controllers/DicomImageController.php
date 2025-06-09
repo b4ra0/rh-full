@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDicomImageRequest;
+use App\Http\Requests\UpdateDicomImageRequest;
 use App\Models\DicomImage;
 use Illuminate\Http\Request;
 
@@ -30,9 +31,9 @@ class DicomImageController extends Controller
      */
     public function store(StoreDicomImageRequest $request)
     {
-
-        $request->validate();
-
+        $data = $request->validated();
+        $dicomImage = DicomImage::create($data);
+        $dicomImage->save();
         return response()->json($dicomImage, 201);
     }
 
@@ -41,7 +42,8 @@ class DicomImageController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = DicomImage::find($id);
+        return response()->json($data);
     }
 
     /**
@@ -55,9 +57,13 @@ class DicomImageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateDicomImageRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+        $dicomImage = DicomImage::find($id);
+        $dicomImage->update($data);
+        $dicomImage->save();
+        return response()->json($dicomImage, 200);
     }
 
     /**
@@ -65,6 +71,8 @@ class DicomImageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dicomImage = DicomImage::find($id);
+        $dicomImage->delete();
+        return response()->json('Exame deletado com sucesso', 204);
     }
 }
