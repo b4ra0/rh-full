@@ -6,6 +6,7 @@ use App\Http\Requests\StoreDicomImageRequest;
 use App\Http\Requests\UpdateDicomImageRequest;
 use App\Models\DicomImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DicomImageController extends Controller
 {
@@ -32,9 +33,13 @@ class DicomImageController extends Controller
     public function store(StoreDicomImageRequest $request)
     {
         $data = $request->validated();
+        $path = $request->file('file')->store('exames');
+        $data['file_path'] = $path;
+        unset($data['file']);
         $dicomImage = DicomImage::create($data);
         $dicomImage->save();
-        return response()->json($dicomImage, 201);
+        $responseJson = array(['id' => $dicomImage->id, 'file_path' => $dicomImage->file_path, 'created_at' => $dicomImage->created_at, 'updated_at' => $dicomImage->updated_at]);
+        return response()->json($responseJson, 201);
     }
 
     /**
@@ -74,5 +79,19 @@ class DicomImageController extends Controller
         $dicomImage = DicomImage::find($id);
         $dicomImage->delete();
         return response()->json('Exame deletado com sucesso', 204);
+    }
+
+    /**
+     * Show the file, so the react can render it.
+     */
+    public function showFile(DicomImage $dicomImage)
+    {
+        $path = $dicomImage->file_path;
+
+        if (!Storage::exists($path)) {
+            return response()->json(['error' => 'Arquivo não encontrado'], 404);
+        }
+
+        return response()->file(storage_path("app/{$path}"));
     }
 }

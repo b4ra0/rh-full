@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DicomImage extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'file_path'
+    ];
 }

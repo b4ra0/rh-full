@@ -22,15 +22,15 @@ class StoreDicomImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "file_path" => 'required|file'
+            "file" => 'required|file'
         ];
     }
 
     public function messages()
     {
         return [
-            "file_path.required" => "Você deve anexar um arquivo",
-            "file_path.file" => "Arquivo inválido"
+            "file.required" => "Você deve anexar um arquivo",
+            "file.file" => "Arquivo inválido"
         ];
     }
 }
