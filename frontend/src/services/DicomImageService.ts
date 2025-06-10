@@ -1,15 +1,23 @@
-import {DicomImage} from "../models/DicomImage";
-import {httpClient} from '../api/httpClient.ts';
+import {DicomImage, getDicomImageFromJson} from "../models/DicomImage";
+import {httpClient} from '../api/httpClient';
 
 export const getAllDicomImages = async (): Promise<DicomImage[]> => {
     const response = await httpClient.get('/dicom-images');
-    return response.data;
+    return response.data.map(getDicomImageFromJson);
 };
 
-export const getDicomImageById = async (id: string): Promise<DicomImage> => {
+export const getDicomImageById = async (id: number): Promise<DicomImage> => {
     const response = await httpClient.get(`/dicom-images/${id}`);
-    return response.data;
+    return getDicomImageFromJson(response.data);
 };
+
+export const getDicomImageFileById = async (id: number): Promise<Blob> => {
+    const response = await httpClient.get(`/dicom-images/${id}/file`, {
+        responseType: 'arraybuffer',
+    });
+    const dicomArrayBuffer = response.data;
+    return new Blob([dicomArrayBuffer], {type: 'application/dicom'});
+}
 
 export const createDicomImage = async (data: Partial<DicomImage>): Promise<DicomImage> => {
     const response = await httpClient.post('/dicom-images', data);

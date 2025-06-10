@@ -22,7 +22,7 @@ class UpdateDicomImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file_path' => 'required|file'
+            'file_path' => 'file|mimes=dcm|max:50000',
         ];
     }
 }

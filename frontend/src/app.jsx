@@ -1,19 +1,24 @@
-import DicomImageList from "./pages/dicomImageList.tsx";
-import {NavBar} from "./components/navBar";
-import {useState} from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import DicomImageList from "./pages/dicomImage/dicomImageList";
+import {NavBar} from "./components/NavBar";
+import DicomImageForm from "./components/dicomImage/DicomImageForm";
+import DicomImageCreate from "./pages/dicomImage/dicomImageCreate";
+import ViewDicomImage from "./components/dicomImage/ViewDicomImage";
+
 
 function App() {
-    // const [mode, setMode] = useState('list');
     return (
-        <App>
-            <div className="p-4">
-                {/*<NavBar/>*/}
-                {/*<button onClick={() => setMode('list')}>Listar</button>*/}
-                {/*<button onClick={() => setMode('add')}>Adicionar</button>*/}
-                {/*{ mode === 'list' && <DicomImageList/>}*/}
-                {/*{ mode === 'add' && <h1>Adicionar</h1>}*/}
-            </div>
-        </App>
+        <div>
+            <Router>
+            <NavBar />
+                <Routes>
+                    <Route path="/" element={<DicomImageList />} />
+                    <Route path="/dicom-image/new" element={<DicomImageCreate />}/>
+                    <Route path="/dicom-image/edit/:id" />
+                    <Route path="/dicom-image/:id" element={<ViewDicomImage />}/>
+                </Routes>
+            </Router>
+        </div>
     );
 }
 

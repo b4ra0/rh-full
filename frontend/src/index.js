@@ -1,11 +1,11 @@
-// src/index.tsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
-import './index.css'; // Tailwind importado aqui
+import './index.css';
+import App from './app.jsx';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App/>
+  </React.StrictMode>
 );

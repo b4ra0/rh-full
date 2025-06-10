@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import cornerstone from 'cornerstone-core';
-import dicomParser from 'dicom-parser';
+import '../../utils/dicomConfig';
 
 const DicomViewer = ({ imageUrl }) => {
     const elementRef = useRef();
