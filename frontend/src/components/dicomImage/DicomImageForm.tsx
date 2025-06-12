@@ -1,8 +1,8 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import * as dicomService from '../../services/DicomImageService';
 import LoadingComponent from '../LoadingComponent';
 
-export default function DicomImageForm({dicomImage}: { dicomImage?: any }) {
+export default function DicomImageForm ({ dicomImage }: { dicomImage?: any }) {
     const [filename, setFilename] = useState(dicomImage?.filename || '');
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function DicomImageForm({dicomImage}: { dicomImage?: any }) {
             }
 
             if (dicomImage) {
-                await dicomService.updateDicomImage(dicomImage.id, {filename});
+                await dicomService.updateDicomImage(dicomImage.id, { filename });
             } else {
                 const formData = new FormData();
                 formData.append('file', file as File);
@@ -33,9 +33,9 @@ export default function DicomImageForm({dicomImage}: { dicomImage?: any }) {
         } finally {
             setLoading(false);
         }
-    };
+            };
 
-    return (
+            return (
         <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
             {error && <div className="text-red-500 mb-4">{error}</div>}
             <form onSubmit={handleSubmit}>
@@ -63,12 +63,16 @@ export default function DicomImageForm({dicomImage}: { dicomImage?: any }) {
                                 <p className="mb-2 text-sm text-gray-500"><span
                                     className="font-semibold">Clique para fazer upload</span> ou arraste e solte o arquivo</p>
                                 <p className="text-xs text-gray-500">Apenas arquivos DCOM</p>
+                                {file &&
+                                    <p className="text-sm text-green-500 mt-2">Arquivo selecionado: {file.name}</p>}
                             </div>
-                            <input id="dropzone-file"
-                                   type="file"
-                                   className="hidden"
-                                   onChange={(e) => setFile(e.target.files?.[0] || null)}
-                                   accept=".dcm"/>
+                            <input
+                                id="dropzone-file"
+                                type="file"
+                                className="hidden"
+                                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                                accept=".dcm"
+                            />
                         </label>
                     </div>
                 </div>

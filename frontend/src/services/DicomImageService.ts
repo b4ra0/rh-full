@@ -19,9 +19,13 @@ export const getDicomImageFileById = async (id: number): Promise<Blob> => {
     return new Blob([dicomArrayBuffer], {type: 'application/dicom'});
 }
 
-export const createDicomImage = async (data: Partial<DicomImage>): Promise<DicomImage> => {
-    const response = await httpClient.post('/dicom-images', data);
-    return response.data;
+export const createDicomImage = async (formData: FormData): Promise<DicomImage> => {
+    const response = await httpClient.post('/dicom-images', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+    return getDicomImageFromJson(response.data);
 };
 
 export const updateDicomImage = async (id: string, data: Partial<DicomImage>): Promise<DicomImage> => {
