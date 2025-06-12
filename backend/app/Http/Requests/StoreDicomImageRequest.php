@@ -23,7 +23,7 @@ class StoreDicomImageRequest extends FormRequest
     {
         return [
             "file" => 'required|file|mimes:dcm|max:50000',
-            "filename" => 'string|max:255',
+            "filename" => 'max:255',
         ];
     }
 
@@ -34,7 +34,6 @@ class StoreDicomImageRequest extends FormRequest
             "file.file" => "Arquivo inválido",
             "file.mimes" => "O arquivo deve ser do tipo DICOM (.dcm)",
             "file.max" => "O arquivo não pode ser maior que 50MB",
-            "filename.string" => "Nome de arquivo inválido",
             "filename.max" => "O nome do arquivo não pode exceder 255 caracteres",
         ];
     }

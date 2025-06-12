@@ -22,7 +22,18 @@ class UpdateDicomImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file_path' => 'file|mimes=dcm|max:50000',
+            "file" => 'nullable|file|mimes:dcm|max:50000',
+            "filename" => 'nullable|max:255',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            "file.file" => "Arquivo inválido",
+            "file.mimes" => "O arquivo deve ser do tipo DICOM (.dcm)",
+            "file.max" => "O arquivo não pode ser maior que 50MB",
+            "filename.max" => "O nome do arquivo não pode exceder 255 caracteres",
         ];
     }
 }

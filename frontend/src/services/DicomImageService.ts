@@ -28,9 +28,14 @@ export const createDicomImage = async (formData: FormData): Promise<DicomImage> 
     return getDicomImageFromJson(response.data);
 };
 
-export const updateDicomImage = async (id: string, data: Partial<DicomImage>): Promise<DicomImage> => {
-    const response = await httpClient.put(`/dicom-images/${id}`, data);
-    return response.data;
+export const updateDicomImage = async (id: string, data: any, isFormData = false): Promise<DicomImage> => {
+    if (isFormData) {
+        return (await httpClient.post(`/dicom-images/${id}`, data, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })).data;
+    } else {
+        return (await httpClient.put(`/dicom-images/${id}`, data)).data;
+    }
 };
 
 export const deleteDicomImage = async (id: string): Promise<void> => {

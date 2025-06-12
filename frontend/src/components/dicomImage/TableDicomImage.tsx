@@ -14,7 +14,6 @@ export default function TableDicomImage({images, loading}: { images: DicomImage[
             {
                 accessorKey: 'filename',
                 header: 'File',
-                Cell: ({cell}) => <p>{cell.getValue<string>().replace('exames/', '')}</p>,
             },
             {
                 accessorKey: 'createdAt',
@@ -37,8 +36,7 @@ export default function TableDicomImage({images, loading}: { images: DicomImage[
         enableColumnActions: false,
         enableColumnFilters: false,
         enablePagination: false,
-        enableSorting: false,
-        enableRowActions: true,
+        enableSorting: true,
         positionActionsColumn: "last",
         muiTableBodyRowProps: ({row}) => ({
             onClick: (event) => {
@@ -48,20 +46,6 @@ export default function TableDicomImage({images, loading}: { images: DicomImage[
                 cursor: "pointer",
             },
         }),
-        renderRowActionMenuItems: ({row}) => [
-            <MenuItem
-                key="edit"
-                onClick={() => window.alert("Edit" + row.getValue("id"))}
-            >
-                Edit
-            </MenuItem>,
-            <MenuItem
-                key="delete"
-                onClick={() => window.alert("Delete" + row.getValue("id"))}
-            >
-                Delete
-            </MenuItem>,
-        ],
     });
 
     if (loading) {
